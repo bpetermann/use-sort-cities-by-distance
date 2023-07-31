@@ -3,7 +3,7 @@ import { Loader } from '@googlemaps/js-api-loader'
 type GoogleMapsLocation = { id?: string; text: string }
 
 const loader = new Loader({
-  apiKey: '',
+  apiKey: import.meta.env.VITE_GOOGLE_API,
   libraries: ['places'],
 })
 
