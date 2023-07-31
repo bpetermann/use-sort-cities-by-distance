@@ -14,5 +14,10 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@googlemaps/js-api-loader": "^1.16.2",
+    "@types/google.maps": "^3.53.5",
+    "tslib": "^2.6.1"
   }
 }
