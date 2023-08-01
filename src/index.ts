@@ -1,1 +1,1 @@
-export { default as useSortByNearest } from './useSortByNearest'
+export { default as useSortByNearest } from './hooks/useSortByNearest'

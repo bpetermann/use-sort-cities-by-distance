@@ -1,27 +1,30 @@
 import { Loader } from '@googlemaps/js-api-loader'
 
-type GoogleMapsLocation = { id?: string; text: string }
+class GoogleMaps {
+  key: string
+  globalMaps: typeof google.maps | undefined
 
-const loader = new Loader({
-  apiKey: import.meta.env.VITE_GOOGLE_API,
-  libraries: ['places'],
-})
+  constructor(key: string) {
+    this.key = key
+    this.globalMaps = undefined
+  }
 
-let globalMaps: typeof google.maps
-const getMaps = async () => {
-  if (typeof window === 'undefined') return undefined
-  if (globalMaps) return globalMaps
+  async getMaps() {
+    if (this.globalMaps) {
+      return this.globalMaps
+    }
 
-  const google = await loader.load()
+    const google = await new Loader({
+      apiKey: this.key,
+      libraries: ['places'],
+    }).load()
 
-  globalMaps = google.maps
+    this.globalMaps = google.maps
+    return this.globalMaps
+  }
 
-  return globalMaps
-}
-
-const googleMaps = {
-  getCoordinates: async (address: string) => {
-    const maps = await getMaps()
+  async getCoordinates(address: string) {
+    const maps = await this.getMaps()
 
     if (!maps) return undefined
 
@@ -37,10 +40,10 @@ const googleMaps = {
         resolve({ lat: lat(), lng: lng() })
       })
     })
-  },
+  }
 
-  getDistance: async (from: { lat: number; lng: number }, to: { lat: number; lng: number }) => {
-    const maps = await getMaps()
+  async getDistance(from: { lat: number; lng: number }, to: { lat: number; lng: number }) {
+    const maps = await this.getMaps()
 
     if (!maps) return undefined
 
@@ -64,8 +67,7 @@ const googleMaps = {
         },
       )
     })
-  },
+  }
 }
 
-export default googleMaps
-export { type GoogleMapsLocation }
+export default GoogleMaps
