@@ -1,1 +1,1 @@
-export { default as useSortByDistance } from './hooks/useSortByDistance'
+export { default as useSortCitiesByDistance } from './hooks/useSortCitiesByDistance'
