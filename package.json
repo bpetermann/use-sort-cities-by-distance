@@ -1,5 +1,5 @@
 {
-  "name": "use-sort-by-distance",
+  "name": "use-sort-cities-by-distance",
   "version": "1.0.0",
   "description": "Sorts an array of cities by proximity to a point",
   "main": "./dist/cjs/index.js",
