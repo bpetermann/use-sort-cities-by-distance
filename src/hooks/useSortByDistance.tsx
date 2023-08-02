@@ -1,67 +1,53 @@
 import { useEffect, useState } from 'react'
-import GoogleMaps from '../helpers/googleMaps'
+import calcDistance from '../helpers/calcDistance'
 
 type Location = {
   city: string
   lat: number
   lng: number
-  distance: number
+  distance?: number
 }
 
 type Props = {
-  key: string
-  location: string
+  list: Location[]
+  start: string
   targets: string[]
 }
 
-const useNearestLocation = ({ key = '', location = '', targets = [] }: Props) => {
+const useNearestLocation = ({ list, start = '', targets = [] }: Props) => {
   const [sorted, setSorted] = useState<Location[]>([])
-  const [error, setError] = useState<boolean | string>(false)
 
   useEffect(() => {
-    const sortByDistance = async () => {
-      try {
-        const googleMaps = new GoogleMaps(key)
+    const cities = list
 
-        if (!location || !targets.length || !googleMaps) {
-          return
-        }
-
-        const startingPoint = await googleMaps.getCoordinates(location)
-
-        const targetCoordinates = await Promise.all(
-          targets.map(async (item) => {
-            const coordinates = await googleMaps.getCoordinates(item)
-            return { city: item, ...coordinates }
-          }),
-        )
-
-        if (startingPoint && targetCoordinates) {
-          const targetsSorted = await Promise.all(
-            targetCoordinates.map(async (item) => {
-              if (!item.lat || !item.lng) return { ...item, distance: -1 }
-              const distance = await googleMaps.getDistance({ lat: item.lat, lng: item.lng }, startingPoint)
-              return { ...item, distance }
-            }),
-          )
-            .then((results) => results.filter((result) => result.distance !== -1 && result.distance !== undefined))
-            .then((results) => results as Location[])
-            .then((results) => results.sort((a, b) => a.distance - b.distance))
-
-          setSorted(targetsSorted)
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Something went wrong')
-      }
+    if (!start || !targets.length) {
+      return
     }
-    sortByDistance()
-  }, [key, location, targets])
+    const startingPoint = cities.find((_) => _.city === start)
 
-  if (error) {
-    return { error }
-  }
+    const targetPoints = targets.map((item) => {
+      const city = cities.find((_) => _.city === item)
+      return {
+        city: item,
+        lat: city?.lat ?? -1,
+        lng: city?.lng ?? -1,
+      }
+    })
 
-  return { sorted, error }
+    if (startingPoint && targetPoints) {
+      const distances = targetPoints.map((item) => {
+        if (!item.lat || !item.lng) return { ...item, distance: -1 }
+        const distance = calcDistance(item.lat, item.lng, startingPoint.lat, startingPoint.lng)
+        return { ...item, distance: distance }
+      })
+
+      const sorted = distances.filter((_) => _.distance !== -1).sort((a, b) => a.distance - b.distance)
+
+      setSorted(sorted)
+    }
+  }, [list, start, targets])
+
+  return { sorted }
 }
 
 export default useNearestLocation
