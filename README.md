@@ -1,51 +1,67 @@
-## useSortCitiesByDistance 
+## useSortCitiesByDistance
 
 [![npm version](https://badge.fury.io/js/use-sort-cities-by-distance.svg)](https://badge.fury.io/js/use-sort-cities-by-distance)
 
-`useSortCitiesByDistance` is a simple react hook that enables you to sort an array of cities based on their proximity to a given point
+`useSortCitiesByDistance` is a simple react hook that enables you to sort an array of cities based on their proximity to a given point. The distance is calculated with a straight line (not travel distance) between the places
 
 ### Installation
 
-```js
+```bash
 npm install use-sort-cities-by-distance
+#or
+yarn add use-sort-cities-by-distance
 ```
 
-### Usage
+### Getting started
 
-- Import the useSortCitiesByDistance hook from the package:
+Import the 'useSortCitiesByDistance' hook from the package:
 
-```js
-import { useSortCitiesByDistance } from 'use-sort-cities-by-distance';
+```jsx
+import { useSortCitiesByDistance } from 'use-sort-cities-by-distance'
 ```
 
-- Define your city data and configuration, and use the hook to get the sorted cities:
+### Usage with JSON Data
 
-```js
-import React, { useState } from 'react';
-import { useSortCitiesByDistance } from 'use-sort-cities-by-distance';
+Define your starting point, all destinations, and a '.json' list with coordinates:
+
+```jsx
+import React, { useState } from 'react'
+import { useSortCitiesByDistance } from 'use-sort-cities-by-distance'
+import cities from './cities.json'
 
 function YourComponent() {
-
   const [config, setConfig] = useState({
-    list: cities, // .json list of possible cities 
+    list: cities, // List of possible cities
     start: 'London', // Starting point
     targets: ['London', 'Paris', 'New York', 'Barcelona'], // Array of target cities
-  });
+  })
 
-  const { sorted } = useSortCitiesByDistance(config);
+  const { sorted } = useSortCitiesByDistance(config)
 
   // Your component code
 }
 ```
 
-- The list property should be an array of cities in the following .json format
+The list property should be an array of cities in the following .json format. A demo list can be found in the demo folder:
 
 ```json
 [
-  { "city": "Los Angeles", "latitude": 34.0522, "longitude": -118.2437 },
-  { "city": "London", "latitude": 51.5074, "longitude": -0.1278 },
-  { "city": "Tokyo", "latitude": 35.6895, "longitude": 139.6917 }
+  { "city": "Los Angeles", "lat": 34.0522, "lng": -118.2437 },
+  { "city": "London", "lat": 51.5074, "lng": -0.1278 },
+  { "city": "Tokyo", "lat": 35.6895, "lng": 139.6917 }
 ]
+```
+
+### Usage with Google Maps
+
+Instead of a list, you can also use the hook with the Google Maps API. Just enter your key as the "key" property and omit the "list":
+
+```jsx
+const config = {
+  key: '******', // Google Maps API key
+  start: 'London',
+  targets: ['London', 'Paris', 'New York', 'Barcelona'],
+}
 ```
 
 ### Contributing

@@ -2,16 +2,16 @@ import { useState } from 'react'
 import React from 'react'
 import './App.css'
 import cities from './cities.json'
-import { useSortByDistance } from 'use-sort-cities-by-distance'
+import { useSortCitiesByDistance } from 'use-sort-cities-by-distance'
 
 function App() {
   const [config, setConfig] = useState({
     list: cities,
     start: 'Vienna',
-    targets: ['Vienna', 'Sankt Pölten', 'Salzburg', 'Linz', 'Klagenfurt', 'Innsbruck', 'Eisenstadt', 'Bregenz'],
+    targets: ['London', 'Amsterdam', 'Vienna', 'Berlin', 'Los Angeles', 'Paris', 'Barcelona', 'Shanghai', 'Dublin'],
   })
 
-  const { sorted } = useSortByDistance(config)
+  const { sorted } = useSortCitiesByDistance(config)
 
   return (
     <>

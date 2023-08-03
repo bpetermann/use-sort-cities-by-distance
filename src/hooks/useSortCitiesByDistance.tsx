@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import calcDistance from '../helpers/calcDistance'
+import GoogleMaps from '../helpers/googleMaps'
 
 type Location = {
   city: string
@@ -9,45 +10,70 @@ type Location = {
 }
 
 type Props = {
-  list: Location[]
+  list?: Location[]
+  key?: string
   start: string
   targets: string[]
 }
 
-const useNearestLocation = ({ list, start = '', targets = [] }: Props) => {
+const useNearestLocation = ({ list, key, start = '', targets = [] }: Props) => {
   const [sorted, setSorted] = useState<Location[]>([])
+  const [error, setError] = useState<boolean | string>(false)
 
   useEffect(() => {
-    const cities = list
+    const sortByDistance = async () => {
+      const cities = list ? list : undefined
+      const googleMaps = key ? new GoogleMaps(key) : undefined
 
-    if (!start || !targets.length) {
-      return
-    }
-    const startingPoint = cities.find((_) => _.city === start)
-
-    const targetPoints = targets.map((item) => {
-      const city = cities.find((_) => _.city === item)
-      return {
-        city: item,
-        lat: city?.lat ?? -1,
-        lng: city?.lng ?? -1,
+      if (!start || !targets.length || (!list && !key)) {
+        return
       }
-    })
 
-    if (startingPoint && targetPoints) {
-      const distances = targetPoints.map((item) => {
-        if (!item.lat || !item.lng) return { ...item, distance: -1 }
-        const distance = calcDistance(item.lat, item.lng, startingPoint.lat, startingPoint.lng)
-        return { ...item, distance: distance }
-      })
+      let startingPoint: { lat: number; lng: number } | undefined
+      let targetPoints
 
-      const sorted = distances.filter((_) => _.distance !== -1).sort((a, b) => a.distance - b.distance)
+      if (cities) {
+        startingPoint = cities.find((_) => _.city === start)
+        targetPoints = targets.map((item) => {
+          const city = cities.find((_) => _.city === item)
+          return {
+            city: item,
+            lat: city?.lat ?? -1,
+            lng: city?.lng ?? -1,
+          }
+        })
+      } else if (googleMaps) {
+        try {
+          startingPoint = await googleMaps.getCoordinates(start)
+          targetPoints = await Promise.all(
+            targets.map(async (item) => {
+              const coordinates = await googleMaps.getCoordinates(item)
+              return { city: item, lat: coordinates?.lat ?? -1, lng: coordinates?.lng ?? -1 }
+            }),
+          )
+        } catch (err) {
+          setError(err instanceof Error ? err.message : 'Something went wrong')
+        }
+      }
 
-      setSorted(sorted)
+      if (startingPoint?.lat && startingPoint?.lng && targetPoints) {
+        const { lat, lng } = startingPoint
+
+        const distances = targetPoints.map((item) => {
+          if (item.lat < 0 || item.lng < 0) return { ...item, distance: -1 }
+          const distance = calcDistance(item.lat, item.lng, lat, lng)
+          return { ...item, distance: distance }
+        })
+
+        const sorted = distances.filter((_) => _.distance !== -1).sort((a, b) => a.distance - b.distance) as Location[]
+
+        setSorted(sorted)
+      }
     }
-  }, [list, start, targets])
+    sortByDistance()
+  }, [key, list, start, targets])
 
-  return { sorted }
+  return { sorted, error }
 }
 
 export default useNearestLocation
