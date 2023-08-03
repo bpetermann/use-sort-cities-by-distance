@@ -1,8 +1,10 @@
-## useSortCitiesByDistance
+# useSortCitiesByDistance
 
 [![npm version](https://badge.fury.io/js/use-sort-cities-by-distance.svg)](https://badge.fury.io/js/use-sort-cities-by-distance)
 
 `useSortCitiesByDistance` is a simple react hook that enables you to sort an array of cities based on their proximity to a given point. The distance is calculated with a straight line (not travel distance) between the places
+
+## Getting started
 
 ### Installation
 
@@ -11,8 +13,6 @@ npm install use-sort-cities-by-distance
 #or
 yarn add use-sort-cities-by-distance
 ```
-
-### Getting started
 
 Import the 'useSortCitiesByDistance' hook from the package:
 

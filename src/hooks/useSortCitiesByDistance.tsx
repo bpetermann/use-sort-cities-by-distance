@@ -38,8 +38,8 @@ const useNearestLocation = ({ list, key, start = '', targets = [] }: Props) => {
           const city = cities.find((_) => _.city === item)
           return {
             city: item,
-            lat: city?.lat ?? -1,
-            lng: city?.lng ?? -1,
+            lat: city?.lat ?? undefined,
+            lng: city?.lng ?? undefined,
           }
         })
       } else if (googleMaps) {
@@ -48,7 +48,7 @@ const useNearestLocation = ({ list, key, start = '', targets = [] }: Props) => {
           targetPoints = await Promise.all(
             targets.map(async (item) => {
               const coordinates = await googleMaps.getCoordinates(item)
-              return { city: item, lat: coordinates?.lat ?? -1, lng: coordinates?.lng ?? -1 }
+              return { city: item, lat: coordinates?.lat ?? undefined, lng: coordinates?.lng ?? undefined }
             }),
           )
         } catch (err) {
@@ -60,7 +60,7 @@ const useNearestLocation = ({ list, key, start = '', targets = [] }: Props) => {
         const { lat, lng } = startingPoint
 
         const distances = targetPoints.map((item) => {
-          if (item.lat < 0 || item.lng < 0) return { ...item, distance: -1 }
+          if (!item.lat || !item.lng) return { ...item, distance: -1 }
           const distance = calcDistance(item.lat, item.lng, lat, lng)
           return { ...item, distance: distance }
         })
