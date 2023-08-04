@@ -14,9 +14,10 @@ type Props = {
   key?: string
   start: string
   targets: string[]
+  unit?: string
 }
 
-const useNearestLocation = ({ list, key, start = '', targets = [] }: Props) => {
+const useNearestLocation = ({ list, key, start = '', targets = [], unit = 'mile' }: Props) => {
   const [sorted, setSorted] = useState<Location[]>([])
   const [error, setError] = useState<boolean | string>(false)
 
@@ -61,7 +62,7 @@ const useNearestLocation = ({ list, key, start = '', targets = [] }: Props) => {
 
         const distances = targetPoints.map((item) => {
           if (!item.lat || !item.lng) return { ...item, distance: -1 }
-          const distance = calcDistance(item.lat, item.lng, lat, lng)
+          const distance = calcDistance(unit, item.lat, item.lng, lat, lng)
           return { ...item, distance: distance }
         })
 
@@ -71,7 +72,7 @@ const useNearestLocation = ({ list, key, start = '', targets = [] }: Props) => {
       }
     }
     sortByDistance()
-  }, [key, list, start, targets])
+  }, [key, list, start, targets, unit])
 
   return { sorted, error }
 }

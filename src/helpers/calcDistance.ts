@@ -2,8 +2,8 @@ const degreesToRadians = (degrees: number) => {
   return degrees * (Math.PI / 180)
 }
 
-const calcDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
-  const R = 6371
+const calcDistance = (unit: string, lat1: number, lon1: number, lat2: number, lon2: number) => {
+  const R = unit === 'km' ? 6371 : 3959
   const dLat = degreesToRadians(lat2 - lat1)
   const dLon = degreesToRadians(lon2 - lon1)
 

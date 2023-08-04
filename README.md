@@ -22,7 +22,7 @@ import { useSortCitiesByDistance } from 'use-sort-cities-by-distance'
 
 ### Usage with JSON Data
 
-Define your starting point, all destinations, and a '.json' list with coordinates:
+Define your starting point, target destinations, and a '.json' list with coordinates of the possible targets:
 
 ```jsx
 import React, { useState } from 'react'
@@ -34,6 +34,7 @@ function YourComponent() {
     list: cities, // List of possible cities
     start: 'London', // Starting point
     targets: ['London', 'Paris', 'New York', 'Barcelona'], // Array of target cities
+    // unit: 'km', // Optional, default is 'mile', enter 'km' if you need kilometers
   })
 
   const { sorted } = useSortCitiesByDistance(config)
