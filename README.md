@@ -34,7 +34,7 @@ function YourComponent() {
     list: cities, // List of possible cities
     start: 'London', // Starting point
     targets: ['London', 'Paris', 'New York', 'Barcelona'], // Array of target cities
-    // unit: 'km', // Optional, default is 'mile', enter 'km' if you need kilometers
+    unit: 'km', // Optional, default is 'miles', enter 'km' if you need kilometers
   })
 
   const { sorted } = useSortCitiesByDistance(config)
