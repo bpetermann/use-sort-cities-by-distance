@@ -10,7 +10,10 @@ function App() {
     list: cities,
     start: 'Vienna',
     targets: ['London', 'Amsterdam', 'Vienna', 'Berlin', 'Los Angeles'],
+    unit: 'miles',
   })
+
+  const miles = config.unit === 'miles'
 
   const { sorted } = useSortCitiesByDistance(config)
 
@@ -26,35 +29,58 @@ function App() {
           }}
         />
       </header>
-      <div className='card'>
-        <h3>
-          <span>Start:</span> {config.start}
-        </h3>
-        {sorted?.map((item) => (
-          <div key={item.city}>
-            <p>
-              <span>{item.city}</span> - {item.distance} km
-            </p>
-          </div>
-        ))}
+      <div className='unit'>
+        <div>
+          <button
+            className={`unit-btn ${!miles ? 'active' : ''}`}
+            onClick={() => {
+              setConfig((prev) => ({ ...prev, unit: 'km' }))
+            }}
+          >
+            km
+          </button>
+          <button
+            className={`unit-btn ${miles ? 'active' : ''}`}
+            onClick={() => {
+              setConfig((prev) => ({ ...prev, unit: 'miles' }))
+            }}
+          >
+            miles
+          </button>
+        </div>
       </div>
+      <main>
+        <div className='card'>
+          <h3>
+            <span>Start:</span> {config.start}
+          </h3>
+          {sorted?.map((item) => (
+            <div key={item.city}>
+              <p>
+                <span>{item.city}</span> - {item.distance} {config.unit}
+              </p>
+            </div>
+          ))}
+        </div>
 
-      <div className='add'>
-        Add cities:
-        {addCities?.map((item) => (
-          <div key={item}>
-            {!config.targets.includes(item) && (
-              <button
-                onClick={() => {
-                  setConfig({ ...config, targets: [...config.targets, item] })
-                }}
-              >
-                {item}
-              </button>
-            )}
-          </div>
-        ))}
-      </div>
+        <div className='add'>
+          Add cities:
+          {addCities?.map((item) => (
+            <div key={item}>
+              {!config.targets.includes(item) && (
+                <button
+                  onClick={() => {
+                    setConfig({ ...config, targets: [...config.targets, item] })
+                  }}
+                >
+                  {item}
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+      </main>
+
       <footer>
         <a href='https://github.com/bpetermann/use-sort-cities-by-distance'>
           <img

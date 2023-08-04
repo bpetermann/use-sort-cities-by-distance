@@ -4,11 +4,9 @@
   font-family: 'Bebas Neue', sans-serif;
   font-family: 'Roboto', sans-serif;
   line-height: 1.5;
-
   color: #ffffff;
   background-color: #15171f;
   font-weight: 500;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -20,7 +18,7 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 32px;
+  padding: 16px;
   text-align: center;
 }
 
@@ -41,12 +39,13 @@ input {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 500;
   font-family: inherit;
   background-color: #202330;
   transition: border-color 0.25s;
   outline: none;
+  margin: 16px 0px;
 }
 
 input[type='text'] {
@@ -61,7 +60,7 @@ button {
   border: none;
   font-size: 12px;
   font-weight: 400;
-  padding: 9px 20px;
+  padding: 4px 20px;
   background-color: #dfe0e2;
   border-radius: 8px;
   color: #181a22;
@@ -82,7 +81,43 @@ header {
 h2 {
   font-weight: 700;
   text-decoration: underline;
-  font-size: 24px;
+  font-size: 20px;
+}
+
+.unit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 0px;
+}
+
+.unit > div {
+  display: flex;
+  align-items: center;
+}
+
+.unit-btn {
+  border-radius: unset;
+  padding: 4px 20px;
+  background-color: #1e293b;
+  color: #dfe0e2;
+}
+
+.unit-btn:hover {
+  box-shadow: unset;
+  opacity: 0.8;
+}
+
+.active {
+  background-color: #dfe0e2;
+  color: #1e293b;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 32px;
 }
 
 h3 {
@@ -91,7 +126,8 @@ h3 {
 }
 
 .card {
-  padding: 32px;
+  width: calc(100% - 140px);
+  padding-bottom: 32px;
 }
 
 .add {
@@ -102,10 +138,9 @@ h3 {
   gap: 12px;
   align-items: center;
   justify-content: space-around;
+  flex-direction: row;
   flex-wrap: wrap;
 }
-
-
 
 span {
   font-weight: 700;
@@ -125,28 +160,50 @@ img {
 }
 
 @media (min-width: 768px) {
+  #root {
+    padding: 32px;
+  }
+  input {
+    font-size: 18px;
+    margin: unset;
+  }
   header {
     flex-direction: row;
   }
-
+  main {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding-top: 32px;
+  }
+  .card {
+    padding-bottom: unset;
+  }
   h2 {
     font-size: 30px;
     text-decoration: none;
   }
-
   h3 {
     font-size: 24px;
   }
-
   body {
     font-size: 18px;
   }
-
   button {
+    padding: 9px 20px;
     font-size: 16px;
   }
-
-  .card {
-    margin: 32px 0px;
+  .add {
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 32px;
+    height: 480px;
+    width: 140px;
+    gap: 24px;
+  }
+  .unit {
+    justify-content: flex-start;
+    padding: 32px 0px;
   }
 }
