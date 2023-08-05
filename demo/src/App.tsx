@@ -64,7 +64,7 @@ function App() {
         </div>
 
         <div className='add'>
-          Add cities:
+          <p>Add</p>
           {addCities?.map((item) => (
             <div key={item}>
               {!config.targets.includes(item) && (

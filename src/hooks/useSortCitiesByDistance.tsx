@@ -9,6 +9,11 @@ type Location = {
   distance?: number
 }
 
+type LocationError = {
+  hasError: boolean
+  message: string
+}
+
 type Props = {
   list?: Location[]
   key?: string
@@ -19,7 +24,7 @@ type Props = {
 
 const useNearestLocation = ({ list, key, start = '', targets = [], unit = 'mile' }: Props) => {
   const [sorted, setSorted] = useState<Location[]>([])
-  const [error, setError] = useState<boolean | string>(false)
+  const [error, setError] = useState<LocationError>({ hasError: false, message: '' })
 
   useEffect(() => {
     const sortByDistance = async () => {
@@ -53,7 +58,7 @@ const useNearestLocation = ({ list, key, start = '', targets = [], unit = 'mile'
             }),
           )
         } catch (err) {
-          setError(err instanceof Error ? err.message : 'Something went wrong')
+          setError({ hasError: true, message: err instanceof Error ? err.message : 'Something went wrong' })
         }
       }
 
