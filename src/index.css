@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+  --font-primary: 'Bebas Neue', sans-serif;
+  --font-secondary: 'Roboto', sans-serif;
+  --color-text: #ffffff;
+  --color-background: #15171f;
+  --color-accent: #dfe0e2;
+  --color-primary: #1e293b;
+  --color-secondary: #202330;
+  --color-gray: rgb(209, 213, 219);
+  --color-gold: #b7a73f;
+  --color-shadow: rgba(255, 255, 255, 0.2);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  font-size: 16px;
+  font-family: var(--font-primary);
+  line-height: 1.5;
+  background-color: var(--color-background);
+  font-weight: 500;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  box-sizing: border-box;
+}
+
+#root {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+  text-align: center;
+}
+
+p {
+  color: var(--color-gray);
+}
+
+input {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--color-secondary);
+  transition: border-color 0.25s;
+  outline: none;
+  margin: 16px 0px;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  color: var(--color-text);
+}
+
+input[type='text']:focus {
+  border: 1px solid var(--color-gold);
+}
+
+button {
+  border: none;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 4.8px 20px;
+  background-color: var(--color-accent);
+  border-radius: 8px;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+button:hover {
+  box-shadow: 0 4px 16px var(--color-shadow);
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.unit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 0px;
+}
+
+.unit > div {
+  display: flex;
+  align-items: center;
+}
+
+.unit-btn {
+  border-radius: unset;
+  padding: 4.8px 20px;
+  background-color: var(--color-primary);
+  color: var(--color-accent);
+  width: 84px;
+}
+
+.unit-btn:first-of-type {
+  border-radius: 8px 0px 0px 8px;
+}
+
+.unit-btn:last-of-type {
+  border-radius: 0px 8px 8px 0px;
+}
+
+.unit-btn:hover {
+  box-shadow: unset;
+  opacity: 0.8;
+}
+
+.active {
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+}
+
+.active:hover {
+  opacity: unset;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 32px;
+}
+
+h3 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.card {
+  width: 100%;
+  padding-bottom: 32px;
+}
+
+.add {
+  border-radius: 8px;
+  background-color: var(--color-secondary);
+  box-shadow: 0 14px 40px #000;
+}
+
+.add > div > p {
+  color: var(--color-text);
+}
+
+.add > div:last-of-type {
+  background-color: var(--color-primary);
+  border-radius: 0px 0px 8px 8px;
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+span {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+footer {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+img {
+  filter: invert(63%) sepia(41%) saturate(581%) hue-rotate(15deg) brightness(95%) contrast(91%);
+}
+
+@media (min-width: 768px) {
+  #root {
+    padding: 32px;
+    font-weight: 600;
+  }
+
+  input {
+    font-size: 18px;
+    margin: unset;
+    padding: 14px 20px;
+    width: 324px;
+    box-sizing: border-box;
+  }
+
+  header {
+    flex-direction: row;
+  }
+
+  main {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding-top: 32px;
+  }
+
+  .card {
+    padding-bottom: unset;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+
+  body {
+    font-size: 18px;
+  }
+
+  button {
+    padding: 14px 20px;
+    font-weight: 600;
+    width: 180px;
+    font-size: 16px;
+  }
+
+  .add {
+    min-width: 324px;
+  }
+
+  .add > div:last-of-type {
+    flex-direction: column;
+    padding: 32px;
+    gap: 24px;
+  }
+
+  .unit {
+    justify-content: flex-start;
+  }
+}
