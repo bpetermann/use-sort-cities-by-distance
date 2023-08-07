@@ -1,9 +1,9 @@
-import React from 'react'
-import { useState } from 'react'
-import cities from './cities.json'
-import { useSortCitiesByDistance } from 'use-sort-cities-by-distance'
+import React from 'react';
+import { useState } from 'react';
+import cities from './cities.json';
+import { useSortCitiesByDistance } from 'use-sort-cities-by-distance';
 
-const addCities = ['Paris', 'Undefined', 'Barcelona', 'Shanghai']
+const addCities = ['Paris', 'Undefined', 'Barcelona', 'Shanghai'];
 
 function App() {
   const [config, setConfig] = useState({
@@ -11,21 +11,26 @@ function App() {
     start: 'Vienna',
     targets: ['London', 'Amsterdam', 'Vienna', 'Berlin', 'Los Angeles'],
     unit: 'miles',
-  })
+  });
 
-  const miles = config.unit === 'miles'
+  const miles = config.unit === 'miles';
 
-  const { sorted } = useSortCitiesByDistance(config)
+  const { sorted } = useSortCitiesByDistance(config);
 
   return (
     <>
       <header>
-        <h2>useSortCitiesByDistance</h2>
+        <div className='logo'>
+          <h2>useSortCitiesByDistance</h2>
+          <div className='icon'>
+            <span className='material-symbols-outlined'>distance</span>
+          </div>
+        </div>
         <input
           type='text'
           placeholder='Change start'
           onChange={(e) => {
-            setConfig((prev) => ({ ...prev, start: e.target.value }))
+            setConfig((prev) => ({ ...prev, start: e.target.value }));
           }}
         />
       </header>
@@ -34,7 +39,7 @@ function App() {
           <button
             className={`unit-btn ${!miles ? 'active' : ''}`}
             onClick={() => {
-              setConfig((prev) => ({ ...prev, unit: 'km' }))
+              setConfig((prev) => ({ ...prev, unit: 'km' }));
             }}
           >
             km
@@ -42,7 +47,7 @@ function App() {
           <button
             className={`unit-btn ${miles ? 'active' : ''}`}
             onClick={() => {
-              setConfig((prev) => ({ ...prev, unit: 'miles' }))
+              setConfig((prev) => ({ ...prev, unit: 'miles' }));
             }}
           >
             miles
@@ -73,7 +78,10 @@ function App() {
                 {!config.targets.includes(item) && (
                   <button
                     onClick={() => {
-                      setConfig({ ...config, targets: [...config.targets, item] })
+                      setConfig({
+                        ...config,
+                        targets: [...config.targets, item],
+                      });
                     }}
                   >
                     {item}
@@ -93,11 +101,16 @@ function App() {
           />
         </a>
         <a href='mailto:benjamin.petermann@gmx.at'>
-          <img src='https://svelte-shopping-cart.vercel.app/images/mail.png' width='24' height='24' alt={'mail icon'} />
+          <img
+            src='https://svelte-shopping-cart.vercel.app/images/mail.png'
+            width='24'
+            height='24'
+            alt={'mail icon'}
+          />
         </a>
       </footer>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

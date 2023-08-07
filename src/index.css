@@ -87,6 +87,26 @@ header {
   align-items: center;
 }
 
+.logo {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.icon {
+  height: 24px;
+  width: 24px;
+}
+
+.icon .material-symbols-outlined {
+  color: #b6a93f;
+}
+
 h2 {
   font-weight: 700;
   font-size: 20px;
@@ -186,7 +206,8 @@ footer {
 }
 
 img {
-  filter: invert(63%) sepia(41%) saturate(581%) hue-rotate(15deg) brightness(95%) contrast(91%);
+  filter: invert(63%) sepia(41%) saturate(581%) hue-rotate(15deg)
+    brightness(95%) contrast(91%);
 }
 
 @media (min-width: 768px) {
