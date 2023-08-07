@@ -1,6 +1,6 @@
 {
   "name": "use-sort-cities-by-distance",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Sorts an array of cities by proximity to a point",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",

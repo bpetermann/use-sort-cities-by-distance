@@ -20,9 +20,9 @@ Import the 'useSortCitiesByDistance' hook from the package:
 import { useSortCitiesByDistance } from 'use-sort-cities-by-distance'
 ```
 
-### Usage with JSON Data
+## Usage with JSON Data
 
-Define your starting point, target destinations, and a '.json' list with coordinates of the possible targets:
+Define your starting point, target destinations, and a .json list with coordinates of the possible targets:
 
 ```jsx
 import React, { useState } from 'react'
@@ -53,7 +53,7 @@ The list property should be an array of cities in the following .json format. A 
 ]
 ```
 
-### Usage with Google Maps
+## Usage with Google Maps
 
 Instead of a list, you can also use the hook with the Google Maps API. Just enter your key as the "key" property and omit the "list":
 
@@ -64,6 +64,13 @@ const config = {
   targets: ['London', 'Paris', 'New York', 'Barcelona'],
 }
 ```
+
+Possible errors are displayed in an error object, which you retain from the hook:
+
+```jsx
+  const { sorted, error } = useSortCitiesByDistance(config)
+```
+
 
 ### Contributing
 
