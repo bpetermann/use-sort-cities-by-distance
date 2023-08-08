@@ -21,7 +21,7 @@ function App() {
     <>
       <header>
         <div className='logo'>
-          <h2>useSortCitiesByDistance</h2>
+          <h2>use-sort-cities-by-distance</h2>
           <div className='icon'>
             <span className='material-symbols-outlined'>distance</span>
           </div>

@@ -11,6 +11,7 @@
   --color-gray: rgb(209, 213, 219);
   --color-gold: #b7a73f;
   --color-shadow: rgba(255, 255, 255, 0.2);
+  --color-border: #383f47;
 }
 
 body {
@@ -59,21 +60,28 @@ input {
   max-width: 400px;
   box-sizing: border-box;
   color: var(--color-text);
+  border: 1px solid var(--color-border);
 }
 
 input[type='text']:focus {
-  border: 1px solid var(--color-gold);
+  border: 1px solid var(--color-border);
+  outline-style: solid;
+  outline-width: 2px;
+  outline-offset: 2px;
+  outline-color: var(--color-border);
 }
 
 button {
   border: none;
   font-size: 12px;
   font-weight: 400;
-  padding: 4.8px 20px;
+  padding: 5px 20px;
   background-color: var(--color-accent);
   border-radius: 8px;
   color: var(--color-primary);
   cursor: pointer;
+  width: 96px;
+  margin: 8px;
 }
 
 button:hover {
@@ -85,17 +93,13 @@ header {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .logo {
   display: flex;
   gap: 8px;
   align-items: center;
-}
-
-h2 {
-  font-weight: 700;
-  font-size: 20px;
 }
 
 .icon {
@@ -126,10 +130,11 @@ h2 {
 
 .unit-btn {
   border-radius: unset;
-  padding: 4.8px 20px;
+  padding: 5px 20px;
   background-color: var(--color-primary);
   color: var(--color-accent);
   width: 84px;
+  margin: unset;
 }
 
 .unit-btn:first-of-type {
@@ -175,10 +180,12 @@ h3 {
   border-radius: 8px;
   background-color: var(--color-secondary);
   box-shadow: 0 14px 40px #000;
+  min-width: 96px;
 }
 
 .add > div > p {
   color: var(--color-text);
+  padding: 6px;
 }
 
 .add > div:last-of-type {
@@ -186,7 +193,6 @@ h3 {
   border-radius: 0px 0px 8px 8px;
   padding: 16px;
   display: flex;
-  gap: 12px;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
@@ -217,11 +223,8 @@ img {
   }
 
   input {
-    font-size: 18px;
     margin: unset;
-    padding: 14px 20px;
     width: 324px;
-    box-sizing: border-box;
   }
 
   header {
@@ -241,7 +244,7 @@ img {
   }
 
   h2 {
-    font-size: 30px;
+    font-size: 32px;
   }
 
   h3 {
@@ -253,10 +256,12 @@ img {
   }
 
   button {
-    padding: 14px 20px;
+    padding: 13px 20px;
+    font-size: 15px;
+    font-weight: 500;
     font-weight: 600;
     width: 180px;
-    font-size: 16px;
+    margin: 10px 8px;
   }
 
   .add {
@@ -266,7 +271,10 @@ img {
   .add > div:last-of-type {
     flex-direction: column;
     padding: 32px;
-    gap: 24px;
+  }
+
+  .add > div > p {
+    padding: 12px;
   }
 
   .unit {
