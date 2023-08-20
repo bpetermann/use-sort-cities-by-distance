@@ -29,7 +29,7 @@ const useNearestLocation = ({ list, key, start = '', targets = [], unit = 'mile'
   useEffect(() => {
     const sortByDistance = async () => {
       const cities = list ? list : undefined
-      const googleMaps = key ? new GoogleMaps(key) : undefined
+      const googleMaps = key ? GoogleMaps.getInstance(key) : undefined
 
       if (!start || !targets.length || (!list && !key)) {
         return

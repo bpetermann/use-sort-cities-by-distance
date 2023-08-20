@@ -1,12 +1,22 @@
 import { Loader } from '@googlemaps/js-api-loader'
 
 class GoogleMaps {
-  key: string
+  key!: string
   globalMaps: typeof google.maps | undefined
+  private static instance: GoogleMaps
+  coordinatesCache: Map<string, { lat: number; lng: number } | undefined> = new Map()
 
-  constructor(key: string) {
+  private constructor(key: string) {
     this.key = key
     this.globalMaps = undefined
+  }
+
+  public static getInstance(key: string): GoogleMaps {
+    if (!GoogleMaps.instance) {
+      GoogleMaps.instance = new GoogleMaps(key)
+    }
+
+    return GoogleMaps.instance
   }
 
   async getMaps() {
@@ -24,6 +34,10 @@ class GoogleMaps {
   }
 
   async getCoordinates(address: string) {
+    if (this.coordinatesCache.has(address)) {
+      return this.coordinatesCache.get(address)
+    }
+
     const maps = await this.getMaps()
 
     if (!maps) return undefined
@@ -37,7 +51,9 @@ class GoogleMaps {
           return
         }
         const { lat, lng } = results[0].geometry.location
-        resolve({ lat: lat(), lng: lng() })
+        const coordinates = { lat: lat(), lng: lng() }
+        this.coordinatesCache.set(address, coordinates)
+        resolve(coordinates)
       })
     })
   }
