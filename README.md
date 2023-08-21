@@ -1,6 +1,10 @@
 # useSortCitiesByDistance
 
 [![npm version](https://badge.fury.io/js/use-sort-cities-by-distance.svg)](https://badge.fury.io/js/use-sort-cities-by-distance)
+[![NPM version][npm-image]][npm-url]
+[![Build][github-build]][github-build-url]
+![npm-typescript]
+[![License][github-license]][github-license-url]
 
 `useSortCitiesByDistance` is a simple react hook that enables you to sort an array of cities based on their proximity to a given point. The distance is calculated with a straight line (not travel distance) between the places
 
@@ -68,9 +72,8 @@ const config = {
 Possible errors are displayed in an error object, which you retain from the hook:
 
 ```jsx
-  const { sorted, error } = useSortCitiesByDistance(config)
+const { sorted, error } = useSortCitiesByDistance(config)
 ```
-
 
 ### Contributing
 
@@ -79,3 +82,11 @@ Contributions, issues, and feature requests are welcome!
 ### License
 
 This project is licensed under the MIT License
+
+[npm-url]: https://www.npmjs.com/package/use-sort-cities-by-distance
+[npm-image]: https://img.shields.io/npm/v/use-sort-cities-by-distance
+[github-license]: https://img.shields.io/github/license/bpetermann/use-sort-cities-by-distance
+[github-license-url]: https://github.com/bpetermann/use-sort-cities-by-distance/blob/main/LICENSE
+[github-build]: https://github.com/bpetermann/use-sort-cities-by-distance/actions/workflows/publish.yml/badge.svg
+[github-build-url]: https://github.com/bpetermann/use-sort-cities-by-distance/actions/workflows/publish.yml
+[npm-typescript]: https://img.shields.io/npm/types/use-sort-cities-by-distance
