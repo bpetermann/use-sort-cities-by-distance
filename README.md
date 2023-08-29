@@ -6,7 +6,7 @@
 ![npm-typescript]
 [![License][github-license]][github-license-url]
 
-`useSortCitiesByDistance` is a simple react hook that enables you to sort an array of cities based on their proximity to a given point. The distance is calculated with a straight line (not travel distance) between the places
+`useSortCitiesByDistance` is a simple react hook that enables you to sort an array of cities based on their proximity to a given point. The distance is calculated with a straight line or travel distance between the places.
 
 ## Getting started
 
@@ -59,13 +59,14 @@ The list property should be an array of cities in the following .json format. A 
 
 ## Usage with Google Maps
 
-Instead of a list, you can also use the hook with the Google Maps API. Just enter your key as the "key" property and omit the "list":
+Instead of a list, you can also use the hook with the Google Maps API. Just enter your key as the "key" property and omit the "list". The use of Google Maps allows the distance in travel distance.
 
 ```jsx
 const config = {
   key: '******', // Google Maps API key
   start: 'London',
   targets: ['London', 'Paris', 'New York', 'Barcelona'],
+  travelDistance: true, // Optional, default is straight line
 }
 ```
 
