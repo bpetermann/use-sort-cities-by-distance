@@ -3,8 +3,8 @@ import { Loader } from '@googlemaps/js-api-loader'
 const MILE_CONVERSION = 0.621371
 
 class GoogleMaps {
-  key!: string
-  globalMaps: typeof google.maps | undefined
+  key: string
+  globalMaps?: typeof google.maps
   private static instance: GoogleMaps
   coordinatesCache: Map<string, { lat: number; lng: number } | undefined> = new Map()
 
@@ -83,7 +83,7 @@ class GoogleMaps {
           const { distance } = response.rows[0].elements[0]
 
           if (typeof distance !== 'object') {
-            resolve(-1)
+            resolve(undefined)
             return
           }
 

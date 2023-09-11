@@ -11,11 +11,11 @@ type Location = {
 
 type TempLocations = {
   city: string
-  lat: number | undefined
-  lng: number | undefined
+  lat?: number
+  lng?: number
 }
 
-type Cities = {
+type City = {
   city: string
   lat: number
   lng: number
@@ -27,7 +27,7 @@ type LocationError = {
 }
 
 type Props = {
-  list?: Cities[]
+  list?: City[]
   key?: string
   start: string
   targets: string[]
@@ -35,13 +35,13 @@ type Props = {
   travelDistance?: boolean
 }
 
-const getCoordinates = (targets: string[], cities: Cities[]) => {
+const getCoordinates = (targets: string[], cities: City[]) => {
   return targets.map((i) => {
     const city = cities.find((c) => c.city === i)
     return {
       city: i,
-      lat: city?.lat ?? undefined,
-      lng: city?.lng ?? undefined,
+      lat: city?.lat,
+      lng: city?.lng,
     }
   })
 }
@@ -50,11 +50,10 @@ const getMapCoordinates = async (targets: string[], maps: GoogleMaps) => {
   return await Promise.all(
     targets.map(async (i) => {
       const coordinates = await maps.getCoordinates(i)
-
       return {
         city: i,
-        lat: coordinates?.lat ?? undefined,
-        lng: coordinates?.lng ?? undefined,
+        lat: coordinates?.lat,
+        lng: coordinates?.lng,
       }
     }),
   )
@@ -68,8 +67,8 @@ const calcTravelDistance = async (
 ) => {
   return await Promise.all(
     targets.map(async (i) => {
-      if (!i.lat || !i.lng) return { ...i, distance: -1 }
-      const distance = await maps.getDistance({ lat: i.lat || 0, lng: i.lng || 0 }, start, unit)
+      if (!i.lat || !i.lng) return { ...i, distance: undefined }
+      const distance = await maps.getDistance({ lat: i.lat, lng: i.lng }, start, unit)
       return { ...i, distance: distance }
     }),
   )
@@ -79,26 +78,33 @@ const calcStraightDistance = (start: { lat: number; lng: number }, targets: Temp
   const { lat, lng } = start
 
   return targets.map((i) => {
-    if (!i.lat || !i.lng) return { ...i, distance: -1 }
+    if (!i.lat || !i.lng) return { ...i, distance: undefined }
     const distance = calcDistance(unit, i.lat, i.lng, lat, lng)
     return { ...i, distance: distance }
   })
 }
 
-const useNearestLocation = ({ list, key, start = '', targets = [], unit = 'mile', travelDistance = false }: Props) => {
+const useSortCitiesByDistance = ({
+  list,
+  key,
+  start = '',
+  targets = [],
+  unit = 'mile',
+  travelDistance = false,
+}: Props) => {
   const [sorted, setSorted] = useState<Location[]>([])
   const [error, setError] = useState<LocationError>({ hasError: false, message: '' })
 
   useEffect(() => {
     const sortByDistance = async () => {
-      const cities = list ? list : undefined
-      const googleMaps = key ? GoogleMaps.getInstance(key) : undefined
+      const cities = list || null
+      const googleMaps = key ? GoogleMaps.getInstance(key) : null
 
-      if (!start || !targets.length || (!list && !key)) {
+      if (!(start && targets.length && (list || key))) {
         return
       }
 
-      let startingPoint: { lat: number; lng: number } | undefined
+      let startingPoint
       let targetPoints
 
       if (cities) {
@@ -109,26 +115,27 @@ const useNearestLocation = ({ list, key, start = '', targets = [], unit = 'mile'
           startingPoint = await googleMaps.getCoordinates(start)
           targetPoints = await getMapCoordinates(targets, googleMaps)
         } catch (err) {
-          setError({ hasError: true, message: err instanceof Error ? err.message : 'Something went wrong' })
+          setError({ hasError: true, message: err instanceof Error ? err.message : 'Could not get cities coordinates' })
         }
       }
 
-      if (startingPoint?.lat && startingPoint?.lng && targetPoints) {
-        let distances
-
-        if (travelDistance && googleMaps) {
-          distances = await calcTravelDistance(startingPoint, targetPoints, googleMaps, unit)
-        } else {
-          distances = calcStraightDistance(startingPoint, targetPoints, unit)
-        }
-
-        const cleanedDistances = distances
-          .filter((i) => i.distance !== -1)
-          .filter((i): i is Location => !!i)
-          .sort((a, b) => a.distance - b.distance)
-
-        setSorted(cleanedDistances)
+      if (!(startingPoint?.lat && startingPoint?.lng && targetPoints)) {
+        return
       }
+
+      let distances
+
+      if (travelDistance && googleMaps) {
+        distances = await calcTravelDistance(startingPoint, targetPoints, googleMaps, unit)
+      } else {
+        distances = calcStraightDistance(startingPoint, targetPoints, unit)
+      }
+
+      const cleanedDistances = distances
+        .filter((i): i is Location => !!i && i.distance !== undefined)
+        .sort((a, b) => a.distance - b.distance)
+
+      setSorted(cleanedDistances)
     }
     sortByDistance()
   }, [key, list, start, targets, travelDistance, unit])
@@ -136,4 +143,4 @@ const useNearestLocation = ({ list, key, start = '', targets = [], unit = 'mile'
   return { sorted, error }
 }
 
-export default useNearestLocation
+export default useSortCitiesByDistance
