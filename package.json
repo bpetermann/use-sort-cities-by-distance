@@ -27,6 +27,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.1.6",
-    "use-sort-cities-by-distance": "^1.0.5"
+    "use-sort-cities-by-distance": "^1.0.8"
   }
 }
